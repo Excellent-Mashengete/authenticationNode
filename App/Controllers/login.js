@@ -17,7 +17,7 @@ module.exports.login = async (req, res) => {
         if (!user) {
             return res.status(400).json({ error: "user does not exists" })
         }else{
-            bcrypt.compare(password, user.password, (err, result) => {
+            bcrypt.compare(password, user.password, async (err, result) => {
                 if(err) {
                     return res.status(400).json({ error: "Unable to compare hashed password" });
                 } else if (result === true){ 
@@ -35,17 +35,12 @@ module.exports.login = async (req, res) => {
                         { expiresIn: '1d' }
                     );
 
-                    // Saving refreshToken with current user
-                    const otherUsers = users.findAll({
-                        where:{
-                            email: {
-                                [Sequelize.Op.not]: user.email
-                            }
+                    // Saving refreshToken with current user 
+                    await users.update({ refreshToken: refreshToken }, {
+                        where: {
+                            email: user.email
                         }
                     });
-
-                    const currentUser = { ...user, refreshToken };
-                    user.create([...otherUsers, currentUser]);
                     res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
                     res.json({ accessToken });
                 }
