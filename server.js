@@ -1,37 +1,50 @@
-const express = require('express'); // import express library
-const cors = require('cors'); //import cors module
-const app = express(); //Initialize express
+const express = require('express'); 
+const app = express();
+const cors = require('cors');
+const corsOptions = require('./App/Configs/corsOptions');
+const verifyJWT = require('./App/Middlewares/verifyJWT');
+const cookieParser = require('cookie-parser');
+const credentials = require('./App/Middlewares/credentials');
 
-require('./configs/dotenv'); //Import your environmental configs
-const client = require('./configs/database');
-const user = require('./routes/users');
+const port = process.env.PORT || 8080;
 
+// Handle options credentials check - before CORS!
+// and fetch cookies credentials requirement
+app.use(credentials);
+
+// Cross Origin Resource Sharing
+app.use(cors(corsOptions));
+
+// built-in middleware to handle urlencoded form data
+app.use(express.urlencoded({ extended: false }));
+
+// built-in middleware for json 
 app.use(express.json());
-app.use(cors());
 
-const port = process.env.PORT || 4000;
+//middleware for cookies
+app.use(cookieParser());
 
-const hostURL = '0.0.0.0'; //Fault-Tolerant listening port for Backend. Picks available dynamic IPv4 and IPv6 addresses of the local host
+// app.use(verifyJWT);
 
-client.connect((err) =>{ // Connect to the Database
-   if (err) {
-     }
-  else {
-    console.log('Data logging initialised');
-   }
+const db = require('./App/Models/');
 
-});
+db.sequelize.authenticate({force: false })
+   .then(() => {
+      console.log("Database is connected");
+   }).catch((err) => {
+      console.log("Failed to connect to DB: ", err);
+   })
 
-
+const register = require('./App/Routes/register')
+const login = require('./App/Routes/login')
 
 app.get('/', (req, res) =>{
     res.status(200).send('Sever Initialized and Online. Ready to take OFF!');
 });
 
-app.use('/user', user) // User endpoint API
+app.use('/api', register);
+app.use('/api', login);
 
-
-
-app.listen(port, process.env.baseURL , () =>{  
-   console.log(`Here we go, All Engines started at ${port}.`) 
+app.listen(port, () =>{
+   console.log(`Server is running on port ${port}. http://localhost:${port}`) 
 })
