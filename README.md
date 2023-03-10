@@ -4,17 +4,16 @@ An Authentication server for expressjs rest api, it authenticate a user using js
 
 ## Prerequisites
 
-<ul>
-    <li><strong>Node & NPM </strong></li>
-        >`Node Js 16.17.0`
-        >
-        >`npm 8.15.0`
-    <li><strong>ExpressJS & Sequelize</strong></li>
-        >`Express JS 4.17.2`
-        >
-        >`Sequelize 6.29.3`
-    <li>- **Text Editor of your choice** (N.B I am using [vscode](https://code.visualstudio.com/download))
-</ul>
+- **Node & NPM**
+
+    - `Node Js 16.17.0`
+    - `npm 8.15.0`</li>
+    
+- **ExpressJS & Sequelize**
+    - `Express JS 4.17.2`
+    - `Sequelize 6.29.3`
+    
+ - **Text Editor of your choice** (N.B I am using [vscode](https://code.visualstudio.com/download))
 
 N.B if you have not installed <strong>NodeJS </strong> on your machine please visit the [NodeJS Official Site.](https://https://nodejs.org/en/)  
 
@@ -46,28 +45,23 @@ N.B Visit <strong>Sequelize</strong> official website to learn more about sequel
 
 ```
 ## Project Setup
-<ol>
-    <li>Clone this project to your desired directory</li>
-    <li>Install <strong>NodeJs</strong></li>
-    <li>open the project and direct to the project</li>
-    <li>Run the of the following commands to install all the packages used to create this project</li>
-        >`npm install or yarn `
-        >
-</ol>
 
+1. Clone this project to your desired directory
+2. Install <strong>NodeJs</strong>
+3. open the project and direct to the project
+4. Run the of the following commands to install all the packages used to create this project
+   - `npm install or yarn `
+        
 ## Running the project
 
-<ol>
-    <li>Make sure to add a .env file this is where you will save all your api keys and secrete keys</li>
-    <li>Navigate inside the your server directory</li>
-    <li>On your terminal run the following command</li>
-        >`node server.js`
-        >
-    <li>Go to the browswer and enter</li>
-        >`http://localhost:8080/`
-        >
-    <li>on the address bar to run the server</li>
-</ol>
+1. Make sure to add a .env file this is where you will save all your api keys and secrete keys
+2. Navigate inside the your server directory
+3. On your terminal run the following command
+   - `node server.js`
+4. Go to the browswer and enter
+   - `http://localhost:8080/`
+5. on the address bar to run the server
+
 
 N.B Run `node server.js`. using this format the server won't automatically reload after doing changes
 Instead install `npm i -D nodemon or yarn add -D nodemon` then Run Server `nodemon server.js` The server will automatically reload if you change any of the source files.
