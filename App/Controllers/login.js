@@ -1,6 +1,5 @@
 const db = require("../Models");
 const users = db.Users;
-const { Sequelize } = db.sequelize
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -22,14 +21,16 @@ module.exports.login = async (req, res) => {
                     return res.status(400).json({ error: "Unable to compare hashed password" });
                 } else if (result === true){ 
                     const accessToken = jwt.sign({ 
-                            "username": user.email
+                            "username": user.email,
+                            "name": user.firstname +" "+user.lastname,
                         },
                         process.env.ACCESS_TOKEN_SECRET,
                         { expiresIn: '30s' }
                     );
 
                     const refreshToken = jwt.sign({
-                            "username": user.email
+                            "username": user.email,
+                            "name": user.firstname +" "+user.lastname,
                         },
                         process.env.REFRESH_TOKEN_SECRET,
                         { expiresIn: '1d' }
@@ -41,8 +42,10 @@ module.exports.login = async (req, res) => {
                             email: user.email
                         }
                     });
-                    res.cookie('jwt', refreshToken, { httpOnly: true, sameSite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
-                    res.json({ accessToken });
+                    res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, maxAge: 24 * 60 * 60 * 1000 });
+                    res.json({ jwt });
+                }else{
+                    return res.status(400).json({ error: "Incorrect password" });
                 }
             })
         }

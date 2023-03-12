@@ -1,8 +1,8 @@
 const express = require('express'); 
 const app = express();
 const cors = require('cors');
+const bodyparser = require("body-parser");
 const corsOptions = require('./App/Configs/corsOptions');
-const verifyJWT = require('./App/Middlewares/verifyJWT');
 const cookieParser = require('cookie-parser');
 const credentials = require('./App/Middlewares/credentials');
 
@@ -12,8 +12,10 @@ const port = process.env.PORT || 8080;
 // and fetch cookies credentials requirement
 app.use(credentials);
 
+app.use(bodyparser.urlencoded({extended: false}));
+app.use(bodyparser.json());
 // Cross Origin Resource Sharing
-app.use(cors(corsOptions));
+app.use(cors(origin="http://localhost:3000"));
 
 // built-in middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
@@ -35,8 +37,9 @@ db.sequelize.authenticate({force: false })
       console.log("Failed to connect to DB: ", err);
    })
 
-const register = require('./App/Routes/register')
-const login = require('./App/Routes/login')
+const register = require('./App/Routes/register');
+const login = require('./App/Routes/login');
+const logout = require('./App/Routes/logout');
 
 app.get('/', (req, res) =>{
     res.status(200).send('Sever Initialized and Online. Ready to take OFF!');
@@ -44,7 +47,8 @@ app.get('/', (req, res) =>{
 
 app.use('/api', register);
 app.use('/api', login);
+app.use('/api', logout);
 
 app.listen(port, () =>{
-   console.log(`Server is running on port ${port}. http://localhost:${port}`) 
+   console.log(`Server is running on port ${port}.`) 
 })
