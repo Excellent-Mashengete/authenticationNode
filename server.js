@@ -15,7 +15,7 @@ app.use(credentials);
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(bodyparser.json());
 // Cross Origin Resource Sharing
-app.use(cors(origin="http://localhost:3000"));
+app.use(cors(corsOptions));
 
 // built-in middleware to handle urlencoded form data
 app.use(express.urlencoded({ extended: false }));
@@ -40,6 +40,7 @@ db.sequelize.authenticate({force: false })
 const register = require('./App/Routes/register');
 const login = require('./App/Routes/login');
 const logout = require('./App/Routes/logout');
+const profile = require('./App/Routes/profile');
 
 app.get('/', (req, res) =>{
     res.status(200).send('Sever Initialized and Online. Ready to take OFF!');
@@ -47,7 +48,8 @@ app.get('/', (req, res) =>{
 
 app.use('/api', register);
 app.use('/api', login);
-app.use('/api', logout);
+app.use('/api', logout)
+app.use('/api', profile);
 
 app.listen(port, () =>{
    console.log(`Server is running on port ${port}.`) 

@@ -42,8 +42,8 @@ module.exports.login = async (req, res) => {
                             email: user.email
                         }
                     });
-                    res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, maxAge: 24 * 60 * 60 * 1000 });
-                    res.json({ jwt });
+                    res.cookie('jwt', refreshToken, { httpOnly: true, samesite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
+                    res.json({ jwt: accessToken });
                 }else{
                     return res.status(400).json({ error: "Incorrect password" });
                 }
