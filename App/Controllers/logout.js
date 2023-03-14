@@ -1,33 +1,17 @@
 const db = require("../Models");
 const users = db.Users;
+const Sequelize = db.Sequelize;
 
 module.exports.logout = async (req, res) => {
-    const {cookies} = req.body;
+    const id = req.userId;
     try{
-        console.log(cookies);
-        if (!cookies) 
-            return res.status(204);
-
-        // Is refreshToken in db?
-        const user = await users.findOne({ 
+        await users.update({ isLoogedIn: false },{ 
             where: { 
-                refreshToken: cookies 
-            } 
-        });
+                id: id
+            }
+        })
 
-        if (!user) {
-            res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
-            return res.status(400).json({ error: "token does not exist, login first" });
-        }else{
-            await users.update({ refreshToken: null }, {
-                where: {
-                    email: user.email
-                }
-            });
-
-            res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
-            return res.status(204).json({ error: `${user.firstname} Successfully logged out` });
-        }
+        return res.status(200).send({ message: "You've been signed out!" });
     }catch(e) {
         return res.status(500).json({error: "Database error while logging out user!" });
     }

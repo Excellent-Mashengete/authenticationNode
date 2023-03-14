@@ -1,5 +1,10 @@
 module.exports = (sequelize, Sequelize) => {
     const Users = sequelize.define("users", {
+        username: {
+            type: Sequelize.STRING,
+            unique: true,
+            allowNull: false
+        },
         firstname: {
             type: Sequelize.STRING,
             allowNull: false
@@ -15,17 +20,17 @@ module.exports = (sequelize, Sequelize) => {
         },
         phone: {
             type: Sequelize.STRING,
-            unique: true,
-            allowNull: false
         },
         avatar: {
             type: Sequelize.TEXT
         },
         password: {
             type: Sequelize.STRING,
+            allowNull: false
         },  
-        refreshToken:{
-            type: Sequelize.STRING
+        isLoogedIn:{
+            type: Sequelize.BOOLEAN,
+            defaultValue: false
         }
     });
   

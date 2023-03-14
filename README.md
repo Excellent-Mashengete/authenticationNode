@@ -12,13 +12,13 @@ An Authentication server for expressjs rest api, it authenticate a user using js
 - **ExpressJS & Sequelize**
     - `Express JS 4.17.2`
     - `Sequelize 6.29.3`
+    - `Cloudinary 1.35.0`
     
  - **Text Editor of your choice** (N.B I am using [vscode](https://code.visualstudio.com/download))
 
 N.B if you have not installed <strong>NodeJS </strong> on your machine please visit the [NodeJS Official Site.](https://https://nodejs.org/en/)  
 
 N.B To get more help on the <strong>Express JS </strong> go check out the [express Overview and Command Reference](https://expressjs.com/en/5x/api.html) page.
-
 
 N.B Visit <strong>Sequelize</strong> official website to learn more about sequelize for structuring the database without using a queries [Sequelize Official Site.](https://sequelize.org/)  
 
@@ -28,19 +28,19 @@ N.B Visit <strong>Sequelize</strong> official website to learn more about sequel
 {
     "dependencies": {
         "bcrypt": "^5.0.1",
-        "cookie-parser": "^1.4.6",
+        "body-parser": "^1.20.2",
+        "cloudinary": "^1.35.0",
         "cors": "^2.8.5",
         "dotenv": "^15.0.0",
         "express": "^4.17.2",
         "jsonwebtoken": "^8.5.1",
+        "multer": "^1.4.5-lts.1",
         "sequelize": "^6.29.3",
-        "sqlite3": "^5.1.4",
-        "uuid": "^9.0.0"
+        "sqlite3": "^5.1.4"
     },
-
     "devDependencies": {
         "nodemon": "^2.0.21"
-    }
+    },
 }
 
 ```
@@ -51,7 +51,15 @@ N.B Visit <strong>Sequelize</strong> official website to learn more about sequel
 3. open the project and direct to the project
 4. Run the of the following commands to install all the packages used to create this project
    - `npm install or yarn `
-        
+
+### Configuring Cloudinary
+1. Navigate to clodianry-> cloudinary.js
+2. Crete the same env names inside your .env file
+3. Go [Cloudinary](https://www.cloudinary.com)
+4. Create an account and login 
+5. Choose NodeJs api 
+6. Copy the api name, key and secret and paste along your variables name you have creted on .env file
+
 ## Running the project
 
 1. Make sure to add a .env file this is where you will save all your api keys and secrete keys

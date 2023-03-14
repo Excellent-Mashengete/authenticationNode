@@ -1,55 +1,54 @@
-const db = require("../Models");
-const users = db.Users;
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
-require('dotenv').config();
+const db = require("../Models");
+const users = db.Users;
+const Sequelize = db.Sequelize;
 
 module.exports.login = async (req, res) => {
-    const {email, password } = req.body
-    if(!email || !password ) 
-        return res.status(400).json({ 'message': 'Username and password are required.' });
+    const { identifier, password } = req.body
+    if(!identifier || !password ) 
+        return res.status(400).json({ 'message': 'email/Username and password are required.' });
 
     try{
-        const user = await users.findOne({where:{ email: email }});
-       
+        const user = await users.findOne({
+            where:{
+                [Sequelize.Op.or]: [{
+                    username: identifier
+                },
+                {
+                    email: identifier
+                }]
+            }
+        });
+
         if (!user) {
-            return res.status(400).json({ error: "user does not exists" })
+            return res.status(400).json({ message: "user does not exists" })
         }else{
             bcrypt.compare(password, user.password, async (err, result) => {
                 if(err) {
-                    return res.status(400).json({ error: "Unable to compare hashed password" });
+                    return res.status(400).json({ message: "Unable to compare hashed password" });
                 } else if (result === true){ 
                     const accessToken = jwt.sign({ 
-                            "username": user.email,
-                            "name": user.firstname +" "+user.lastname,
+                            "id": user.id
                         },
                         process.env.ACCESS_TOKEN_SECRET,
-                        { expiresIn: '30s' }
+                        { expiresIn: '86400' }
                     );
 
-                    const refreshToken = jwt.sign({
-                            "username": user.email,
-                            "name": user.firstname +" "+user.lastname,
-                        },
-                        process.env.REFRESH_TOKEN_SECRET,
-                        { expiresIn: '1d' }
-                    );
-
-                    // Saving refreshToken with current user 
-                    await users.update({ refreshToken: refreshToken }, {
+                    // change islooge to true
+                    await users.update({ isLoogedIn: true }, {
                         where: {
                             email: user.email
                         }
                     });
-                    res.cookie('jwt', refreshToken, { httpOnly: true, samesite: 'None', secure: true, maxAge: 24 * 60 * 60 * 1000 });
-                    res.json({ jwt: accessToken });
+                    
+                    return res.json({ email: user.email, name: user.firstname + " " + user.lastname, token :accessToken });
                 }else{
-                    return res.status(400).json({ error: "Incorrect password" });
+                    return res.status(400).json({ message: "Incorrect password" });
                 }
             })
         }
     }catch(e) {
-        res.status(500).json({error: "Database error while registring user!" });
+        res.status(500).json({message: "Database error while registring user!" });
     }
 }

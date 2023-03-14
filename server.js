@@ -3,9 +3,8 @@ const app = express();
 const cors = require('cors');
 const bodyparser = require("body-parser");
 const corsOptions = require('./App/Configs/corsOptions');
-const cookieParser = require('cookie-parser');
 const credentials = require('./App/Middlewares/credentials');
-
+require('dotenv').config();
 const port = process.env.PORT || 8080;
 
 // Handle options credentials check - before CORS!
@@ -23,10 +22,6 @@ app.use(express.urlencoded({ extended: false }));
 // built-in middleware for json 
 app.use(express.json());
 
-//middleware for cookies
-app.use(cookieParser());
-
-// app.use(verifyJWT);
 
 const db = require('./App/Models/');
 
@@ -37,18 +32,14 @@ db.sequelize.authenticate({force: false })
       console.log("Failed to connect to DB: ", err);
    })
 
-const register = require('./App/Routes/register');
-const login = require('./App/Routes/login');
-const logout = require('./App/Routes/logout');
+const auth = require('./App/Routes/auth');
 const profile = require('./App/Routes/profile');
 
 app.get('/', (req, res) =>{
     res.status(200).send('Sever Initialized and Online. Ready to take OFF!');
 });
 
-app.use('/api', register);
-app.use('/api', login);
-app.use('/api', logout)
+app.use('/api', auth);
 app.use('/api', profile);
 
 app.listen(port, () =>{

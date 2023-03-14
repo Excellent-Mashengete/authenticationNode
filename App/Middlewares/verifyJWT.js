@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
+
 
 module.exports.verifyJWT = (req, res, next) => {
-    const authHeader = req.headers['authorization'];
+    const authHeader = req.headers['authorization'] ||  req.headers['authorization'];
     try{
-        if (!authHeader) return res.status(401).json({messages:"Unauthorized token missing"});
+        if (!authHeader) return res.status(401).json({ messages: "Unauthorized token missing" });
         
         jwt.verify(authHeader, process.env.ACCESS_TOKEN_SECRET, (err, decode) => {
             if(err) return res.status(403).json({message: "invalid token"})
-            req.user = decode;
+            req.userId = decode.id;
             next();
         })
     }catch(e){
