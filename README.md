@@ -74,6 +74,7 @@ N.B Visit <strong>Sequelize</strong> official website to learn more about sequel
 N.B Run `node server.js`. using this format the server won't automatically reload after doing changes
 Instead install `npm i -D nodemon or yarn add -D nodemon` then Run Server `nodemon server.js` The server will automatically reload if you change any of the source files.
 
+N.B Navigate to server line 28, once your server is running change sync to authenticted and true to false by doing this is that your model won't overwrite the model created already in your database 
 
 ## API endpoint testing
 Use postman or thunderclient to test your http request endpoints whether they are working or not 
