@@ -27,7 +27,15 @@ module.exports = (sequelize, Sequelize) => {
         password: {
             type: Sequelize.STRING,
             allowNull: false
-        },  
+        }, 
+        verified: {
+            type: Sequelize.BOOLEAN,
+            default: false,
+        }, 
+        OTP_Pin: {
+            type: Sequelize.NUMBER,
+            allowNull: false
+        }, 
         isLoogedIn:{
             type: Sequelize.BOOLEAN,
             defaultValue: false
