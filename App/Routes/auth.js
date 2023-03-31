@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
+//Middlewares
+const { verifyJWT } = require('../Middlewares/verifyJWT');
 const { checkDuplicateUsernameOrEmail } = require('../Middlewares/verifySignup');
-const { login, VerifyOTP} = require('../Controllers/login');
+
+//controllers
+const { login } = require('../Controllers/login');
 const { register } = require('../Controllers/register');
 const { logout } = require('../Controllers/logout');
-const { verifyJWT } = require('../Middlewares/verifyJWT');
 const { verifyUser } = require('../Controllers/verifyregistration');
+const { VerifyOTP } = require('../Controllers/verifyOTPPinOnLogin');
 
 router.post('/login', login); // login a user
 router.post('/register', checkDuplicateUsernameOrEmail, register); // register a user

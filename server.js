@@ -34,6 +34,7 @@ db.sequelize.sync({force: false }) //once your server is running change sync to 
 
 const auth = require('./App/Routes/auth');
 const profile = require('./App/Routes/profile');
+const requests  = require('./App/Routes/requestEmails');
 
 app.get('/', (req, res) =>{
     res.status(200).send('Sever Initialized and Online. Ready to take OFF!');
@@ -41,6 +42,7 @@ app.get('/', (req, res) =>{
 
 app.use('/api', auth);
 app.use('/api', profile);
+app.use('/api', requests);
 
 app.listen(port, () =>{
    console.log(`Server is running on port ${port}.`) 
