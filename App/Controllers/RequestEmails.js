@@ -26,10 +26,10 @@ module.exports.RequestVerifiyingEmail = async (req, res) => {
         // Send an email notification to verify a user email
         await sendEmail(user.dataValues.email, "Verify Email", message);
     
-        return res.json({message: 'An Email has been sent to your account please verify' });
+        return res.status(200).json({message: 'An Email has been sent to your account please verify' });
 
     }catch(e) {
-        res.status(500).json({error: "Database error while verifying user!" });
+        res.status(500).json({message: "Database error while verifying user!" });
     }
 }
 
@@ -51,16 +51,8 @@ module.exports.RequestOTP_PIN = async (req, res) => {
         //send an email with an OTP PIN
         await sendEmail(user.dataValues.email, "Verify your candidate account", message);
 
-        await users.update({
-            OTP_Pin: OTPPin() 
-        }, {
-            where: {
-                email: user.dataValues.email
-            }
-        });
-
         return res.status(200).json({ message: "Check your emails for OTP PIN" });
     }catch(e) {
-        res.status(500).json({error: "Database error while requesting a new OTP PIN user!" });
+        res.status(500).json({message: "Database error while requesting a new OTP PIN user!" });
     }
 }

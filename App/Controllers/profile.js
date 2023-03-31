@@ -19,7 +19,7 @@ module.exports.getProfile = async (req, res) => {
         
         return res.status(200).json((person));
     }catch(e){
-        return res.status(500).json({error: "Database error while retrieving user!" }); 
+        return res.status(500).json({message: "Database error while retrieving user!" }); 
     }
 }
 
@@ -44,7 +44,7 @@ module.exports.updateProfile = async (req, res) => {
                     id: id
                 }
             });
-            return res.status(200).send({message: "user updated successfully"})
+            return res.status(200).json({message: "user updated successfully"})
         }else{
             await users.update({
                 firstname: firstname,  
@@ -56,10 +56,10 @@ module.exports.updateProfile = async (req, res) => {
                     id: id
                 }
             });
-            return res.status(200).send({message: "user updated successfully"})
+            return res.status(200).json({message: "user updated successfully"})
        }
     }catch(e){
-        return res.status(500).json({error: "Database error while retrieving user!" }); 
+        return res.status(500).json({message: "Database error while retrieving user!" }); 
     }
 }
 

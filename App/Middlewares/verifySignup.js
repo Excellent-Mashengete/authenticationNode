@@ -13,6 +13,6 @@ module.exports.checkDuplicateUsernameOrEmail = async (req, res, next) => {
 
         next();
     } catch (error) {
-        return res.status(500).json({ error: "Unable to validate Username or email!" });
+        return res.status(500).json({ message: "Unable to validate Username or email!" });
     }
 };

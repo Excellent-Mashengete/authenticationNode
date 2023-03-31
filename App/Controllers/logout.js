@@ -1,6 +1,5 @@
 const db = require("../Models");
 const users = db.Users;
-const Sequelize = db.Sequelize;
 
 module.exports.logout = async (req, res) => {
     const id = req.userId;
@@ -13,6 +12,6 @@ module.exports.logout = async (req, res) => {
 
         return res.status(200).send({ message: "You've been signed out!" });
     }catch(e) {
-        return res.status(500).json({error: "Database error while logging out user!" });
+        return res.status(500).json({message: "Database error while logging out user!" });
     }
 }

@@ -35,6 +35,7 @@ N.B Visit <strong>Sequelize</strong> official website to learn more about sequel
         "express": "^4.17.2",
         "jsonwebtoken": "^8.5.1",
         "multer": "^1.4.5-lts.1",
+        "nodemailer": "^6.9.1",
         "sequelize": "^6.29.3",
         "sqlite3": "^5.1.4"
     },

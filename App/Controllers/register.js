@@ -12,7 +12,7 @@ module.exports.register = async (req, res) => {
 
     try {  
         bcrypt.hash(password, 10, async (err, hash) => {
-            if (err) return res.status(400).json({ error: "unable to protect password" });
+            if (err) return res.status(400).json({ message: "unable to protect password" });
             
             const registeredUser = await users.create({
                 firstname: firstname, lastname: lastname,
@@ -39,9 +39,9 @@ module.exports.register = async (req, res) => {
             //Send an email notification to verify a user email
             await sendEmail(registeredUser.dataValues.email, "Verify Email", message);
 
-            return res.json({message: 'An Email has been sent to your account please verify' });
+            return res.status(201).json({message: 'An Email has been sent to your account please verify' });
         })
     }catch(e) {
-        res.status(500).json({error: "Database error while registring user!" });
+        res.status(500).json({message: "Database error while registring user!" });
     }
 }
