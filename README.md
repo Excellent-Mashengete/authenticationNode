@@ -1,11 +1,11 @@
 # Express JS - JWT Protected Routes
 
-An Authentication server for expressjs rest api, it authenticate a user using json web token
+An Authentication server for expressjs rest api
+
 
 ## Prerequisites
 
 - **Node & NPM**
-
     - `Node Js 16.17.0`
     - `npm 8.15.0`</li>
     
@@ -71,13 +71,26 @@ N.B Visit <strong>Sequelize</strong> official website to learn more about sequel
 5. on the address bar to run the server
 
 
-N.B Run `node server.js`. using this format the server won't automatically reload after doing changes
-Instead install `npm i -D nodemon or yarn add -D nodemon` then Run Server `nodemon server.js` The server will automatically reload if you change any of the source files.
+## Testing the project
+
+1. As a new user you have to provide a real email address in order to verify your account.
+2. Once you have successfully register you will receive an email to verify the account.
+3. Click on the link sent to email, then you can be able to register 
+4. Always whenever you login you will receive an email with An OTP Pin which you will need to provide to the application 
+5. Once the OTP Pin has been verified you will receive a JWT token, and due to network issues you can request another OTP pin provided you send your email address used to register the application.
+
+N.B Run `npm run start`. using this format the server won't automatically reload after doing changes because it runs the server as `node server.js`. 
+Instead install `npm i -D nodemon or yarn add -D nodemon` then Run Server `npm run dev` The server will automatically reload if you change any of the source files. this way runs the server using nodemon `nodemon server.js`
+
+To see all that got to `package.json` under `scripts` line 8 and 9 those are the commands set to runs the server.
+If they are not set then run the server `node server.js` or `nodemon server.js` provided that nodemon has been installed.
 
 N.B Navigate to server line 28, once your server is running change sync to authenticted and true to false by doing this is that your model won't overwrite the model created already in your database 
 
 ## API endpoint testing
 Use postman or thunderclient to test your http request endpoints whether they are working or not 
+
+Navigate to `App/Routes` thats where you will find all your endpoints combined with entry point on server line `43 - 46` and where your server is running for instance login will be `http://localhost:8080/api/login`
 
 To get more help on npm packages go check out (https://www.npmjs.com) page.
 
