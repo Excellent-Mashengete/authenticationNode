@@ -94,5 +94,4 @@ Navigate to `App/Routes` thats where you will find all your endpoints combined w
 
 To get more help on npm packages go check out (https://www.npmjs.com) page.
 
-
 ***`Excellent Mashengete Ⓒ Copyright 2023`***
